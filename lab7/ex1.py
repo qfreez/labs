@@ -9,8 +9,11 @@ class Employee:
 
 class Manager(Employee):
     def __init__(self, name, id, department):
-        super().__init__(name, id)
+        Employee.__init__(self, name, id)
         self.department = department
+
+    def get_info(self):
+        return f"{self.department}"
 
     def manage_project(self):
         return f"{self.name} управляет проектами в отделе {self.department}"
@@ -18,7 +21,7 @@ class Manager(Employee):
 
 class Technician(Employee):
     def __init__(self, name, id, specialization):
-        super().__init__(name, id)
+        Employee.__init__(self, name, id)
         self.specialization = specialization
 
     def perform_maintenance(self):
@@ -28,8 +31,8 @@ class Technician(Employee):
 class TechManager(Manager, Technician):
     def __init__(self, name, id, department, specialization):
         Employee.__init__(self, name, id)
-        self.department = department
-        self.specialization = specialization
+        Manager.__init__(self, name, id, department)
+        Technician.__init__(self, name, id, specialization)
         self.subordinates = []
 
     def add_employee(self, employee):
@@ -56,3 +59,6 @@ print(tm.get_info())
 print(tm.manage_project())
 print(tm.perform_maintenance())
 print(tm.get_team_info())
+
+print(emp1.get_info())
+print(mgr.get_info())
